@@ -1,4 +1,4 @@
-package org.hush.mojo;
+package org.hush.plugin.mojo;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -40,7 +40,6 @@ public class TestMojo extends AbstractMojo {
 
 
 
-    @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         getLog().info(tag+"---"+registryUrl+"---"+userName+"---"+passWord+"---"+dockerHost+"---"+servers);
     }

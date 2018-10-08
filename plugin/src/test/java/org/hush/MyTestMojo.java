@@ -1,7 +1,7 @@
 package org.hush;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-import org.hush.mojo.TestMojo;
+import org.hush.plugin.mojo.TestMojo;
 
 import java.io.File;
 
