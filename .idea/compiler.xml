@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="docker_client" />
-        <module name="plugin" />
+        <module name="docker-maven-plugin" />
+        <module name="plugin_test" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="docker_client" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.hush</groupId>
+        <artifactId>docker_maven_plugin</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>plugin_test</artifactId>
+    <groupId>org.hush</groupId>
+    <version>1.0.0</version>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.hush</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>1.0.1</version>
+                <configuration>
+                    <tag>1.0.0</tag>
+                    <!--<registryUrl>www.baidu.com</registryUrl>-->
+                    <passWord>123</passWord>
+                    <userName>mary</userName>
+                    <repository>hush</repository>
+                    <dockerFilePath>${project.basedir}</dockerFilePath>
+                    <!--<registryUrl>${project.build.directory}</registryUrl>-->
+                    <buildArgs>
+                        <name>asd</name>
+                    </buildArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

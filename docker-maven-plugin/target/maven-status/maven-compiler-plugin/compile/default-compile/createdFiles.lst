@@ -1,0 +1,5 @@
+org\hush\plugin\mojo\AbstractForMojo.class
+org\hush\plugin\mojo\utils\StringUtils.class
+org\hush\plugin\mojo\TestMojo.class
+org\hush\plugin\mojo\LoggingProgressHandler.class
+org\hush\plugin\mojo\BuildMojo.class
