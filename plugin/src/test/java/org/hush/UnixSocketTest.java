@@ -3,6 +3,7 @@ package org.hush;
 import jnr.unixsocket.UnixSocket;
 import jnr.unixsocket.UnixSocketAddress;
 import jnr.unixsocket.UnixSocketChannel;
+import org.hush.plugin.mojo.utils.StringUtils;
 import org.junit.Test;
 
 import java.io.*;
@@ -15,6 +16,13 @@ import java.io.*;
 public class UnixSocketTest {
 
     @Test
+    public void test(){
+        System.out.println(StringUtils.isEmpty(""));
+        System.out.println(StringUtils.isEmpty(null));
+        System.out.println(StringUtils.isEmpty("asdaf"));
+    }
+
+//    @Test
     public void unixSocketTest() throws IOException {
         File sockFile = new File("/var/run/docker.sock");
         UnixSocketAddress address = new UnixSocketAddress(sockFile);

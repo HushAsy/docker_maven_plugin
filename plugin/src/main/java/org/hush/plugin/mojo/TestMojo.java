@@ -28,19 +28,15 @@ public class TestMojo extends AbstractMojo {
     @Parameter
     private String passWord;
 
-    @Parameter(defaultValue = "127.0.0.1:2375")
+    @Parameter
     private String dockerHost;
 
     @Parameter
     private File serverFile;
 
-    @Parameter(defaultValue = "${settings.servers}")
-    private String servers;
-
 
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info(tag+"---"+registryUrl+"---"+userName+"---"+passWord+"---"+dockerHost+"---"+servers);
     }
 }

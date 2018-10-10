@@ -8,6 +8,7 @@ import okhttp3.ResponseBody;
 import org.hush.client.docker.Version;
 import org.hush.client.exceptions.ParseJsonException;
 import org.hush.client.exceptions.ResponseException;
+import org.hush.client.utils.ResponseUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,9 +23,10 @@ public class DockerFactory {
     private  final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public JSONObject getInfo(Request request) throws ParseJsonException {
-        Version version = new Version();
-        JSONObject jsonObject = version.getJsonObject(request);
-        return jsonObject;
+//        Version version = new Version();
+//        JSONObject jsonObject = ResponseUtils.parseBodyToJsonObject(request);
+//        return jsonObject;
+        return null;
     }
 
 

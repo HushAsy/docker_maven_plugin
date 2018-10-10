@@ -14,13 +14,19 @@
         <plugins>
             <plugin>
                 <groupId>org.hush</groupId>
-                <artifactId>docker_maven_plugin</artifactId>
+                <artifactId>plugin</artifactId>
                 <version>1.0-SNAPSHOT</version>
                 <configuration>
                     <tag>1.0.0</tag>
-                    <registryUrl>www.baidu.com</registryUrl>
+                    <!--<registryUrl>www.baidu.com</registryUrl>-->
                     <passWord>123</passWord>
                     <userName>mary</userName>
+                    <repository>hush</repository>
+                    <dockerFilePath>${project.basedir}</dockerFilePath>
+                    <!--<registryUrl>${project.build.directory}</registryUrl>-->
+                    <buildArgs>
+                        <name>asd</name>
+                    </buildArgs>
                 </configuration>
             </plugin>
         </plugins>

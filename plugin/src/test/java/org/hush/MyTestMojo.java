@@ -1,6 +1,13 @@
 package org.hush;
 
+import org.apache.maven.execution.DefaultMavenExecutionRequest;
+import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.ProjectBuilder;
+import org.apache.maven.project.ProjectBuildingRequest;
+import org.eclipse.aether.DefaultRepositorySystemSession;
+import org.hush.plugin.mojo.BuildMojo;
 import org.hush.plugin.mojo.TestMojo;
 
 import java.io.File;
@@ -16,7 +23,12 @@ public class MyTestMojo extends AbstractMojoTestCase {
         File testPom = new File( getBasedir(),
           "src/test/resources/pom.xml" );
 
-        TestMojo mojo = (TestMojo) lookupMojo( "sayHi", testPom );
+//        MavenExecutionRequest executionRequest = new DefaultMavenExecutionRequest();
+//        ProjectBuildingRequest configuration = executionRequest.getProjectBuildingRequest()
+//              .setRepositorySession(new DefaultRepositorySystemSession());
+//        MavenProject project = rule.lookup(ProjectBuilder.class).build(pom, configuration).getProject();
+
+        BuildMojo mojo = (BuildMojo) lookupMojo( "build", testPom );
         mojo.execute();
     }
 }
