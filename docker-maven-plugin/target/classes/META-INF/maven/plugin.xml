@@ -7,7 +7,7 @@
   <description></description>
   <groupId>org.hush</groupId>
   <artifactId>docker-maven-plugin</artifactId>
-  <version>1.0.1</version>
+  <version>1.0-SNAPSHOT</version>
   <goalPrefix>docker</goalPrefix>
   <isolatedRealm>false</isolatedRealm>
   <inheritedByDefault>true</inheritedByDefault>
@@ -28,6 +28,13 @@
       <threadSafe>true</threadSafe>
       <parameters>
         <parameter>
+          <name>auth</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
           <name>buildArgs</name>
           <type>java.util.Map</type>
           <required>false</required>
@@ -39,7 +46,7 @@
         </parameter>
         <parameter>
           <name>dockerFilePath</name>
-          <type>java.lang.String</type>
+          <type>java.io.File</type>
           <required>false</required>
           <editable>true</editable>
           <description></description>
@@ -54,6 +61,20 @@
         <parameter>
           <name>email</name>
           <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>identitytoken</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>nocache</name>
+          <type>boolean</type>
           <required>false</required>
           <editable>true</editable>
           <description></description>
@@ -94,6 +115,13 @@
           <description></description>
         </parameter>
         <parameter>
+          <name>useMavenSettingsForAuth</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
           <name>userName</name>
           <type>java.lang.String</type>
           <required>false</required>
@@ -102,7 +130,146 @@
         </parameter>
       </parameters>
       <configuration>
+        <auth implementation="java.lang.String">${dockerfile.auth}</auth>
+        <dockerFilePath implementation="java.io.File" default-value="${project.basedir}">${docker.DockerFile}</dockerFilePath>
+        <email implementation="java.lang.String">${dockerfile.email}</email>
+        <identitytoken implementation="java.lang.String">${dockerfile.identitytoken}</identitytoken>
+        <nocache implementation="boolean" default-value="false"/>
+        <passWord implementation="java.lang.String">${dockerfile.passWord}</passWord>
+        <serviceAddress implementation="java.lang.String">${dockerfile.serviceAddress}</serviceAddress>
         <session implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
+        <useMavenSettingsForAuth implementation="boolean" default-value="false">${dockerfile.useMavenSettingsForAuth}</useMavenSettingsForAuth>
+        <userName implementation="java.lang.String">${dockerfile.userName}</userName>
+      </configuration>
+    </mojo>
+    <mojo>
+      <goal>push</goal>
+      <requiresDirectInvocation>false</requiresDirectInvocation>
+      <requiresProject>true</requiresProject>
+      <requiresReports>false</requiresReports>
+      <aggregator>false</aggregator>
+      <requiresOnline>false</requiresOnline>
+      <inheritedByDefault>true</inheritedByDefault>
+      <phase>deploy</phase>
+      <implementation>org.hush.plugin.mojo.PushMojo</implementation>
+      <language>java</language>
+      <instantiationStrategy>per-lookup</instantiationStrategy>
+      <executionStrategy>once-per-session</executionStrategy>
+      <threadSafe>true</threadSafe>
+      <parameters>
+        <parameter>
+          <name>auth</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>buildArgs</name>
+          <type>java.util.Map</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>&lt;buildArgs&gt;
+     &lt;key1&gt;value1&lt;/key1&gt;
+     &lt;key2&gt;value2&lt;/key2&gt;
+&lt;/buildArgs&gt;</description>
+        </parameter>
+        <parameter>
+          <name>dockerFilePath</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>dockerHost</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>email</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>identitytoken</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>nocache</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>passWord</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>repository</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>serviceAddress</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>session</name>
+          <type>org.apache.maven.execution.MavenSession</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>tag</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>useMavenSettingsForAuth</name>
+          <type>boolean</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>userName</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+      </parameters>
+      <configuration>
+        <auth implementation="java.lang.String">${dockerfile.auth}</auth>
+        <dockerFilePath implementation="java.io.File" default-value="${project.basedir}">${docker.DockerFile}</dockerFilePath>
+        <email implementation="java.lang.String">${dockerfile.email}</email>
+        <identitytoken implementation="java.lang.String">${dockerfile.identitytoken}</identitytoken>
+        <nocache implementation="boolean" default-value="false"/>
+        <passWord implementation="java.lang.String">${dockerfile.passWord}</passWord>
+        <serviceAddress implementation="java.lang.String">${dockerfile.serviceAddress}</serviceAddress>
+        <session implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
+        <useMavenSettingsForAuth implementation="boolean" default-value="false">${dockerfile.useMavenSettingsForAuth}</useMavenSettingsForAuth>
+        <userName implementation="java.lang.String">${dockerfile.userName}</userName>
       </configuration>
     </mojo>
     <mojo>
@@ -120,8 +287,53 @@
       <threadSafe>false</threadSafe>
       <parameters>
         <parameter>
+          <name>auth</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>buildArgs</name>
+          <type>java.util.Map</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description>&lt;buildArgs&gt;
+     &lt;key1&gt;value1&lt;/key1&gt;
+     &lt;key2&gt;value2&lt;/key2&gt;
+&lt;/buildArgs&gt;</description>
+        </parameter>
+        <parameter>
+          <name>dockerFilePath</name>
+          <type>java.io.File</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
           <name>dockerHost</name>
           <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>email</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>identitytoken</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>nocache</name>
+          <type>boolean</type>
           <required>false</required>
           <editable>true</editable>
           <description></description>
@@ -141,6 +353,13 @@
           <description></description>
         </parameter>
         <parameter>
+          <name>repository</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
           <name>serverFile</name>
           <type>java.io.File</type>
           <required>false</required>
@@ -148,8 +367,29 @@
           <description></description>
         </parameter>
         <parameter>
+          <name>serviceAddress</name>
+          <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>session</name>
+          <type>org.apache.maven.execution.MavenSession</type>
+          <required>true</required>
+          <editable>false</editable>
+          <description></description>
+        </parameter>
+        <parameter>
           <name>tag</name>
           <type>java.lang.String</type>
+          <required>false</required>
+          <editable>true</editable>
+          <description></description>
+        </parameter>
+        <parameter>
+          <name>useMavenSettingsForAuth</name>
+          <type>boolean</type>
           <required>false</required>
           <editable>true</editable>
           <description></description>
@@ -163,7 +403,15 @@
         </parameter>
       </parameters>
       <configuration>
+        <auth implementation="java.lang.String">${dockerfile.auth}</auth>
+        <dockerFilePath implementation="java.io.File" default-value="${project.basedir}">${docker.DockerFile}</dockerFilePath>
+        <email implementation="java.lang.String">${dockerfile.email}</email>
+        <identitytoken implementation="java.lang.String">${dockerfile.identitytoken}</identitytoken>
+        <nocache implementation="boolean" default-value="false"/>
+        <serviceAddress implementation="java.lang.String">${dockerfile.serviceAddress}</serviceAddress>
+        <session implementation="org.apache.maven.execution.MavenSession" default-value="${session}"/>
         <tag implementation="java.lang.String" default-value="${project.version}"/>
+        <useMavenSettingsForAuth implementation="boolean" default-value="false">${dockerfile.useMavenSettingsForAuth}</useMavenSettingsForAuth>
       </configuration>
     </mojo>
   </mojos>

@@ -1,9 +1,22 @@
 package org.hush.plugin.mojo;
 
+import com.spotify.docker.client.DockerClient;
+import com.spotify.docker.client.exceptions.DockerException;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.hush.plugin.mojo.exceptions.DockerMojoException;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @description:
@@ -17,22 +30,9 @@ import org.apache.maven.plugins.annotations.Mojo;
 public class BuildMojo extends AbstractForMojo {
 
     public void execute() throws MojoExecutionException, MojoFailureException {
-
-        getParams();
+        buildImages();
     }
 
-    public void xxx(){
-//        List<DockerClient.BuildParam> buildParamList = new ArrayList();
-//        Map<String, Object> buildArgs = new HashMap();
-//        buildArgs.put("JAR_FILE", "hello/dubbo_consumer.jar");
-//        buildParamList.add(new DockerClient.BuildParam("buildargs", StringUtils.encodeBuildParams(buildArgs)));
-//        DockerClient.BuildParam buildParams[] = buildParamList.toArray(new DockerClient.BuildParam[buildParamList.size()]);
-//        URI url = this.getClass().getResource("/").toURI();
-//        System.out.println(url.getPath());
-//        Path path = Paths.get(url);
-//
-//        dockerClient.build(path, "test:1.0.0",new LoggingProgressHandler(getLog(null), true), buildParams);
-    }
 
 
 }

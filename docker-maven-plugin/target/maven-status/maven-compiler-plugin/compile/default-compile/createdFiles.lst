@@ -1,5 +1,10 @@
+org\hush\plugin\mojo\common\Constants.class
 org\hush\plugin\mojo\AbstractForMojo.class
 org\hush\plugin\mojo\utils\StringUtils.class
+org\hush\plugin\mojo\common\Auth.class
+org\hush\plugin\mojo\exceptions\DockerMojoException.class
 org\hush\plugin\mojo\TestMojo.class
 org\hush\plugin\mojo\LoggingProgressHandler.class
 org\hush\plugin\mojo\BuildMojo.class
+org\hush\plugin\mojo\PushMojo.class
+org\hush\plugin\mojo\utils\XmlToJson.class

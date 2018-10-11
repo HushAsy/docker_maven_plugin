@@ -12,6 +12,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
       <module name="docker_client" target="8" />
+      <module name="plugin" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

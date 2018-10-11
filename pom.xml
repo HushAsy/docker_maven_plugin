@@ -13,6 +13,7 @@
         <module>docker-maven-plugin</module>
         <module>plugin_test</module>
     </modules>
+
     <packaging>pom</packaging>
 
     <build>

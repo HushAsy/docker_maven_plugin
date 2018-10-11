@@ -1,12 +1,15 @@
 package org.hush.plugin.mojo;
 
-import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.settings.Server;
+import org.apache.maven.settings.Settings;
+import org.codehaus.plexus.util.xml.Xpp3Dom;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @description:
@@ -14,7 +17,7 @@ import java.io.File;
  * @create: 2018-10-08 16:59
  **/
 @Mojo(name = "sayHi")
-public class TestMojo extends AbstractMojo {
+public class TestMojo extends AbstractForMojo {
 
     @Parameter(defaultValue = "${project.version}")
     private String tag;
@@ -38,5 +41,9 @@ public class TestMojo extends AbstractMojo {
 
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        Settings setting = session.getSettings();
+        List<Server> list = setting.getServers();
+        org.codehaus.plexus.util.xml.Xpp3Dom dom = (Xpp3Dom) list.get(0).getConfiguration();
+        System.out.println(dom.getChild("email").getValue());
     }
 }
