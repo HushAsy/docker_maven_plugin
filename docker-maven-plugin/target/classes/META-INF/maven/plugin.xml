@@ -7,7 +7,7 @@
   <description></description>
   <groupId>org.hush</groupId>
   <artifactId>docker-maven-plugin</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0-0</version>
   <goalPrefix>docker</goalPrefix>
   <isolatedRealm>false</isolatedRealm>
   <inheritedByDefault>true</inheritedByDefault>
@@ -39,10 +39,7 @@
           <type>java.util.Map</type>
           <required>false</required>
           <editable>true</editable>
-          <description>&lt;buildArgs&gt;
-     &lt;key1&gt;value1&lt;/key1&gt;
-     &lt;key2&gt;value2&lt;/key2&gt;
-&lt;/buildArgs&gt;</description>
+          <description></description>
         </parameter>
         <parameter>
           <name>dockerFilePath</name>
@@ -169,10 +166,7 @@
           <type>java.util.Map</type>
           <required>false</required>
           <editable>true</editable>
-          <description>&lt;buildArgs&gt;
-     &lt;key1&gt;value1&lt;/key1&gt;
-     &lt;key2&gt;value2&lt;/key2&gt;
-&lt;/buildArgs&gt;</description>
+          <description></description>
         </parameter>
         <parameter>
           <name>dockerFilePath</name>
@@ -298,10 +292,7 @@
           <type>java.util.Map</type>
           <required>false</required>
           <editable>true</editable>
-          <description>&lt;buildArgs&gt;
-     &lt;key1&gt;value1&lt;/key1&gt;
-     &lt;key2&gt;value2&lt;/key2&gt;
-&lt;/buildArgs&gt;</description>
+          <description></description>
         </parameter>
         <parameter>
           <name>dockerFilePath</name>

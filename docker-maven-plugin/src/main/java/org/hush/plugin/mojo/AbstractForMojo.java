@@ -38,13 +38,6 @@ public abstract class AbstractForMojo extends AbstractMojo {
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected  DockerClient dockerClient;
-    {
-        try {
-            dockerClient = DefaultDockerClient.fromEnv().build();
-        } catch (DockerCertificateException e) {
-            logger.error("init docker client error", e);
-        }
-    }
 
     @Parameter
     protected String repository;
@@ -82,35 +75,95 @@ public abstract class AbstractForMojo extends AbstractMojo {
     @Parameter(property = "dockerfile.auth")
     protected String auth;
 
-    /**
-     * <buildArgs>
-     *      <key1>value1</key1>
-     *      <key2>value2</key2>
-     * </buildArgs>
-     */
     @Parameter
-    private Map buildArgs;
+    protected Map buildArgs;
+
+    @Parameter
+    protected Map labels;
+
+    @Parameter
+    protected String networkmode;
+
+    @Parameter
+    protected Integer cpushares;
+
+    @Parameter
+    protected Integer memswap;
+
+    @Parameter
+    protected Integer cpusetcpus;
+
+    @Parameter
+    protected Integer cpuperiod;
+
+    @Parameter
+    protected Integer cpuquota;
 
     @Parameter(defaultValue = "${session}", readonly = true, required = true)
     protected MavenSession session;
 
+
     public DockerClient.BuildParam[] getParams(){
         List<DockerClient.BuildParam> buildParamList = new ArrayList();
-        if (!StringUtils.isEmpty(tag)){
-            logger.info("tag:"+tag);
+        if (labels != null && labels.size() != 0){
+            try {
+                buildParamList.add(new DockerClient.BuildParam("labels", StringUtils.encodeBuildParams(labels)));
+            } catch (Exception e) {
+                //
+            }
         }
 
-        if (!StringUtils.isEmpty(repository)){
-            logger.info("repository:"+repository);
+        if (!StringUtils.isEmpty(networkmode)){
+            try {
+                buildParamList.add(new DockerClient.BuildParam("networkmode", StringUtils.encodeBuildParams(networkmode)));
+            } catch (Exception e) {
+                //
+            }
         }
 
-        if (dockerFilePath != null){
-            logger.info("dockerFilePath:"+dockerFilePath);
+        if (cpushares != null){
+            try {
+                buildParamList.add(new DockerClient.BuildParam("cpushares", StringUtils.encodeBuildParams(cpushares)));
+            } catch (Exception e) {
+                //
+            }
         }
+
+        if (memswap != null){
+            try {
+                buildParamList.add(new DockerClient.BuildParam("memswap", StringUtils.encodeBuildParams(memswap)));
+            } catch (Exception e) {
+                //
+            }
+        }
+
+        if (cpusetcpus != null){
+            try {
+                buildParamList.add(new DockerClient.BuildParam("cpusetcpus", StringUtils.encodeBuildParams(cpusetcpus)));
+            } catch (Exception e) {
+                //
+            }
+        }
+
+        if (cpuperiod != null){
+            try {
+                buildParamList.add(new DockerClient.BuildParam("cpuperiod", StringUtils.encodeBuildParams(cpuperiod)));
+            } catch (Exception e) {
+                //
+            }
+        }
+
+        if (cpuquota != null){
+            try {
+                buildParamList.add(new DockerClient.BuildParam("cpuquota", StringUtils.encodeBuildParams(cpuquota)));
+            } catch (Exception e) {
+                //
+            }
+        }
+
         if (buildArgs != null) {
             if (buildArgs.size() != 0) {
                 try {
-                    logger.info(buildArgs.toString());
                     buildParamList.add(new DockerClient.BuildParam("buildargs", StringUtils.encodeBuildParams(buildArgs)));
                 } catch (Exception e) {
                     logger.error("encode param error",e);
@@ -149,7 +202,7 @@ public abstract class AbstractForMojo extends AbstractMojo {
         return file.toPath();
     }
 
-    protected List<RegistryAuth> setRegistryAuth(){
+    protected List<RegistryAuth> setRegistryAuth() {
         List<RegistryAuth> lists = new ArrayList();
         RegistryAuth registryAuth = null;
         if (useMavenSettingsForAuth == true){
@@ -170,27 +223,24 @@ public abstract class AbstractForMojo extends AbstractMojo {
                 lists.add(registryAuth);
             }
         }else {
-            if (StringUtils.isEmpty(userName)){
-                new DockerMojoException("002", "userName not set in maven plugin:<configuration><userName></userName></configuration>");
-                return null;
-            }
-            if (StringUtils.isEmpty(passWord)){
-                new DockerMojoException("003", "passWord not set in maven plugin:<configuration><passWord></passWord></configuration>");
-                return null;
-            }
-            if (StringUtils.isEmpty(email)){
-                new DockerMojoException("004", "email not set in maven plugin:<configuration><email></email></configuration>");
-                return null;
-            }
-            if (StringUtils.isEmpty(serviceAddress)){
-                new DockerMojoException("005", "serviceAddress not set in maven plugin:<configuration><serviceAddress></serviceAddress></configuration>");
-                return null;
-            }
             registryAuth =RegistryAuth.create(userName,passWord,email,serviceAddress,identitytoken,auth);
             lists.add(registryAuth);
         }
 
         return lists;
+    }
+
+    protected DockerClient getDockerClient(){
+        try {
+            if (!StringUtils.isEmpty(dockerHost)) {
+                dockerClient = DefaultDockerClient.fromEnv().uri(dockerHost).build();
+            }else{
+                dockerClient = DefaultDockerClient.fromEnv().build();
+            }
+        } catch (DockerCertificateException e) {
+            e.printStackTrace();
+        }
+        return dockerClient;
     }
 
     public void buildImages(){
@@ -205,8 +255,7 @@ public abstract class AbstractForMojo extends AbstractMojo {
 
         DockerClient.BuildParam[] buildParams = getParams();
         try {
-            System.out.println(contextPath);
-            dockerClient.build(contextPath, imagesName, new LoggingProgressHandler(getLog(), true), buildParams);
+            getDockerClient().build(contextPath, imagesName, new LoggingProgressHandler(getLog(), true), buildParams);
         } catch (DockerException e) {
             logger.error("docker build error", e);
         } catch (InterruptedException e) {
@@ -216,18 +265,11 @@ public abstract class AbstractForMojo extends AbstractMojo {
         }
     }
 
-    public void pushImage(RegistryAuth auth) throws DockerMojoException {
+    public void pushImage(final RegistryAuth auth) throws DockerMojoException {
         try {
-            dockerClient.auth(auth);
+            getDockerClient().push(getImageName(), new LoggingProgressHandler(getLog(), true), auth);
         } catch (DockerException e) {
-            logger.error("set auth info error", e);
-        } catch (InterruptedException e) {
-            logger.error("auth failed",e);
-        }
-        try {
-            dockerClient.push(getImageName(), new LoggingProgressHandler(getLog(), true));
-        } catch (DockerException e) {
-            throw new DockerMojoException("", "push image faild");
+            throw new DockerMojoException("push image faild");
         } catch (InterruptedException e) {
             logger.error("push images iterrupted", e);
         }

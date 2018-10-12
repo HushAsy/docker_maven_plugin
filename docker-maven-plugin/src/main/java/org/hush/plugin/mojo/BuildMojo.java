@@ -32,7 +32,4 @@ public class BuildMojo extends AbstractForMojo {
     public void execute() throws MojoExecutionException, MojoFailureException {
         buildImages();
     }
-
-
-
 }

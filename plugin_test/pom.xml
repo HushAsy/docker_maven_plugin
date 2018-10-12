@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.hush</groupId>
         <artifactId>docker_maven_plugin</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0-0</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -27,15 +27,17 @@
             <plugin>
                 <groupId>org.hush</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${parent.version}</version>
                 <configuration>
                     <tag>hush</tag>
                     <repository>registry.cn-hangzhou.aliyuncs.com/hush/basecontainer</repository>
                     <dockerFilePath>${project.basedir}</dockerFilePath>
+                    <serviceAddress>registry.cn-hangzhou.aliyuncs.com</serviceAddress>
                     <buildArgs>
                         <name>${project.build.finalName}</name>
                     </buildArgs>
                     <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+                    <dockerHost>http://120.78.206.183:2375</dockerHost>
                 </configuration>
             </plugin>
         </plugins>

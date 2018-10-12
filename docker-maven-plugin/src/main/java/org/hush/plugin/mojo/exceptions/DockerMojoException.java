@@ -16,6 +16,11 @@ public class DockerMojoException extends Exception {
         this.message = message;
     }
 
+    public DockerMojoException(String message){
+        super();
+        this.message = message;
+    }
+
     public String getCode() {
         return code;
     }

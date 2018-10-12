@@ -7,7 +7,7 @@
 
     <groupId>org.hush</groupId>
     <artifactId>docker_maven_plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-0</version>
 
     <modules>
         <module>docker-maven-plugin</module>
@@ -15,6 +15,10 @@
     </modules>
 
     <packaging>pom</packaging>
+
+    <properties>
+        <parentVersion>1.0-0</parentVersion>
+    </properties>
 
     <build>
         <pluginManagement>
